@@ -20,4 +20,9 @@ The [MPU-9250 IMU](https://www.sparkfun.com/products/13762) and the [MS5803-14BA
 **Adalogger**<br/>
 The [Adalogger Featherwing](https://www.adafruit.com/product/2922) is an additional piece produced by Adafruit that gives their Feather boards the ability to work with an SD card.  It can be soldered directly below the main microcontroller, and it allows the SmartRock to record, save, and dump large amounts of data.<br/>
 
+## Mechanical Aspects
 
+**Casing**<br/>
+The casing's primary purpose was to hold all the necessary electronics inside a waterproof container.  It was designed in three pieces (bottom cap, middle shaft, top cap) with the intention of glueing them all together to form a solid cylinder; the pieces were 3D printed using a resin printer.<br/>
+
+**External Port**<br/>
