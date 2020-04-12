@@ -12,5 +12,5 @@ Independent study collaboration between the W&L Engineering and Geology Departme
 *Figure 1.  SmartRock electronics consisting of a Feather Cortex LoRa microcontroller, an IMU accelerometer, two pressure sensors, a LiPo battery, and an Adalogger for the SD card.*<br/>
 
 **Feather M0 Cortex**<br/>
-The [Feather M0 Cortex] (https://www.adafruit.com/product/3178) is a microcontroller produced by Adafruit with long range radio capability.  It 
+The [Feather M0 Cortex](https://www.adafruit.com/product/3178) is a microcontroller produced by Adafruit with long range radio capability.  It 
   
