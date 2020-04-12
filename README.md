@@ -26,3 +26,4 @@ The [Adalogger Featherwing](https://www.adafruit.com/product/2922) is an additio
 The casing's primary purpose was to hold all the necessary electronics inside a waterproof container.  It was designed in three pieces (bottom cap, middle shaft, top cap) with the intention of glueing them all together to form a solid cylinder; the pieces were 3D printed using a resin printer.<br/>
 
 **External Port**<br/>
+The external port was implemented with the goal of eliminating the need to continually unseal/reseal the entire capsule during its usage.  It utilizes a reed switch and magnetic connections to allow for direct wire communication to the electronics inside via the serial port of the Feather; this gives the user the ability to dump data over this pathway without having to phsically access the SD card inside.  Additionally, connecting to the port also charges the Lipo battery, so ideally once the container is sealed, it can stay shut for a while.
