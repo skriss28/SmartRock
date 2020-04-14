@@ -22,7 +22,7 @@ The [Adalogger Featherwing](https://www.adafruit.com/product/2922) is an additio
 
 ## Mechanical Aspects
 
-   ![Capsule Orthogonal View](https://user-images.githubusercontent.com/63022881/79246292-2cf12380-7e47-11ea-8ed3-c83de36c2b48.jpg)
+   ![Capsule Orthogonal View](https://user-images.githubusercontent.com/63022881/79247911-1fd53400-7e49-11ea-8440-3056896cd37b.jpg)
 *Figure 2.  SmartRock 3D printed waterproof casing to hold all the necessary electronics.*<br/>
 
 **Casing**<br/>
