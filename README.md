@@ -8,7 +8,7 @@ Independent study collaboration between the W&L Engineering and Geology Departme
   
 ## Electronics
  
-   ![Image description](https://user-images.githubusercontent.com/63022881/78575936-01908800-77fa-11ea-98aa-a51f17e20751.jpg)
+   ![Electronics](https://user-images.githubusercontent.com/63022881/78575936-01908800-77fa-11ea-98aa-a51f17e20751.jpg)
 *Figure 1.  SmartRock electronics consisting of a Feather Cortex LoRa microcontroller, an IMU accelerometer, two pressure sensors, a LiPo battery, and an Adalogger for the SD card.*<br/>
 
 **Feather M0 Cortex**<br/>
@@ -23,7 +23,7 @@ The [Adalogger Featherwing](https://www.adafruit.com/product/2922) is an additio
 ## Mechanical Aspects
 
    ![Capsule Orthogonal View](https://github.com/skriss28/SmartRock/issues/4#issue-599681431)
-*Figure 2.  SmartRock 3D printed waterproofed casing to hold all necessary electronics.*<br/>
+*Figure 2.  SmartRock 3D printed waterproof casing to hold all the necessary electronics.*<br/>
 
 **Casing**<br/>
 The casing's primary purpose was to hold all the necessary electronics inside a waterproof container.  It was designed in three pieces (bottom cap, middle shaft, top cap) with the intention of glueing them all together to form a solid cylinder; the pieces were 3D printed using a resin printer.<br/>
