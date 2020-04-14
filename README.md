@@ -22,6 +22,9 @@ The [Adalogger Featherwing](https://www.adafruit.com/product/2922) is an additio
 
 ## Mechanical Aspects
 
+
+*Figure 2.  SmartRock 3D printed waterproofed casing to hold all necessary electronics.*<br/>
+
 **Casing**<br/>
 The casing's primary purpose was to hold all the necessary electronics inside a waterproof container.  It was designed in three pieces (bottom cap, middle shaft, top cap) with the intention of glueing them all together to form a solid cylinder; the pieces were 3D printed using a resin printer.<br/>
 
