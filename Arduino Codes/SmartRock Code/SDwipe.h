@@ -1,0 +1,1 @@
+extern boolean wipeSDcard();

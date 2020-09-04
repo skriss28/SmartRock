@@ -13,26 +13,48 @@ boolean initSDcard() {
   boolean SDcardInit_success = false;
   //Serial.println("Iniatalize SD card...");
 
-/* JE 31 Mar 2020: working on bug fix for sd init on adafruit feather m0 lora.
-*  Issue may be in setting appropriate SPI bus, e.g. code that works in tests: 
-*  if (!sd.cardBegin(SD_CHIP_SELECT, SD_SCK_MHZ(SD_SPI_CLK_MAX))) 
- SDfat documentation here:https://www.if.ufrj.br/~pef/producao_academica/artigos/audiotermometro/audiotermometro-I/bibliotecas/SdFat/Doc/html/class_sd_fat.html#a9a4deb665fb0140daf22c62de3ae497d
+  /* JE 31 Mar 2020: working on bug fix for sd init on adafruit feather m0 lora.
+     Issue may be in setting appropriate SPI bus, e.g. code that works in tests:
+     if (!sd.cardBegin(SD_CHIP_SELECT, SD_SCK_MHZ(SD_SPI_CLK_MAX)))
+    SDfat documentation here:https://www.if.ufrj.br/~pef/producao_academica/artigos/audiotermometro/audiotermometro-I/bibliotecas/SdFat/Doc/html/class_sd_fat.html#a9a4deb665fb0140daf22c62de3ae497d
 
- bool SdFat::begin ( uint8_t   chipSelectPin = SD_CHIP_SELECT_PIN,
-                     uint8_t   sckRateID = SPI_FULL_SPEED 
-                    ) 
+    bool SdFat::begin ( uint8_t   chipSelectPin = SD_CHIP_SELECT_PIN,
+                       uint8_t   sckRateID = SPI_FULL_SPEED
+                      )
   */
-// SPI Speed options: _FULL, _HALF, _QUARTER, _SIXTEENTH
+  // SPI Speed options: _FULL, _HALF, _QUARTER, _SIXTEENTH
   if (!sdEx.begin(chipSelect, SPI_HALF_SPEED)) {
-  //if (!sdEx.begin()) {
-    Serial.println("SdFatSdioEX begin() failed. Check SD card is present in microSD slot.");
+    //if (!sdEx.begin()) {
+    Serial.println("SdFat begin() failed.  Check SD card is present in microSD slot.");
     sdEx.initErrorPrint();
+    SDcardInit_success = false;
   }
   else { // SD memory card initiailzed; now open a file
     sdEx.chvol(); // make sdEx the current volume.
     SDcardInit_success = true;
 
-    Serial.println("Finished Initializing");
+    Serial.println("SD card Successfully Initialized");
+    delay(500);
+
+    Serial.println(" ----- List of files on SD card ---------- ");
+    Serial.println("       Size, Name ");
+    sdEx.ls(&Serial, LS_SIZE);
+    delay(500);
+
+    /*
+      // open next file in root.  The volume working directory, vwd, is root
+      while (file.openNext(sdEx.vwd(), O_READ)) {
+      file.printName(&Serial);
+      Serial.write('   ');
+      file.printFileSize(&Serial);
+      Serial.write('   ');
+      file.printModifyDateTime(&Serial);
+      Serial.println();
+      file.close();
+      }
+    */
+
+
   }
 
   return SDcardInit_success;
@@ -54,20 +76,25 @@ boolean SDcardCreateLogFile() { // added JE 2018 Nov 20, creating a contiguous, 
   boolean SDcardOpenFile_success = false;
 
 
-  // Set file name suffix.  Base file name is "Intsy_"
+  // Set file name suffix.  Base file name is "sr" (defined in SDWrite.h), updated 23 Apr 2020 JE
   // filename for file.createcontigous for SD must be DOS 8.3 format:
   //  http://www.if.ufrj.br/~pef/producao_academica/artigos/audiotermometro/audiotermometro-I/bibliotecas/SdFat/Doc/html/class_sd_base_file.html#ad14a78d348219d6ce096582b6ed74526
 
   const uint8_t BASE_NAME_SIZE = sizeof(FILE_BASE_NAME) - 1;
-  const uint8_t FILE_NAME_DIM  = BASE_NAME_SIZE + 7;
-  char binName[FILE_NAME_DIM] = FILE_BASE_NAME "00.txt";
+  const uint8_t FILE_NAME_DIM  = BASE_NAME_SIZE + 11;
+  char binName[FILE_NAME_DIM] = FILE_BASE_NAME "YYMMDD.txt";
   char fname[FILE_NAME_DIM];
   strcpy(fname, binName);
-  //Serial.println("Input SD card filename extension:");
-  Serial.println(F("\nEnter two digit file suffix xx (Rock_xx.txt)"));
-  //Serial.write(name, BASE_NAME_SIZE);
 
-  for (int i = 0; i < 2; i++) {
+  Serial.println(F("\nEnter 6 digit file suffix in YYMMDD format (sr<YYMMDD>.txt)"));
+  Serial.println(F("\n\n SD card file contents are listed below. Choose unique file name; existing files will be overwritten!\n"));
+
+  Serial.println(" ----- List of files on SD card ---------- ");
+  Serial.println("       Size, Name ");
+  sdEx.ls(&Serial, LS_SIZE);
+
+  //for (int i = 0; i < 2; i++) {
+  for (int i = 0; i < 6; i++) {
     while (!Serial.available()) {
       delay(100);
       //SysCall::yield();
@@ -91,7 +118,7 @@ boolean SDcardCreateLogFile() { // added JE 2018 Nov 20, creating a contiguous, 
 
 
 
-  //for pre-allocated, pre-erased file.  Copied from Teensy36_SDFatSDIO_LowLatencyLogger, JE 20 Nov 2018
+  //for pre-allocated, pre-erased file.
   //uint32_t first_sector = 0;
   //uint32_t last_sector = 0;
   uint32_t next_sector = 0;
@@ -107,7 +134,7 @@ boolean SDcardCreateLogFile() { // added JE 2018 Nov 20, creating a contiguous, 
   sdEx.remove(fname); // will remove file if already exist.  should probably warn user of this JE 13 Dec 2018
 
   // User input for file size
-  Serial.println(F("Enter data file size (MB)"));
+  Serial.println(F("Enter data file size (MB)."));
 
   // wait for user to input desired sampling rate
   while (!Serial.available()) {
@@ -116,9 +143,9 @@ boolean SDcardCreateLogFile() { // added JE 2018 Nov 20, creating a contiguous, 
   }
 
   uint32_t LogFileSz_MB = Serial.parseInt();
-    char problem = Serial.read();
-    //Serial.print("Problem child: ");
-    //Serial.println(problem);
+  char problem = Serial.read();
+  //Serial.print("Problem child: ");
+  //Serial.println(problem);
 
   log_file_size = LogFileSz_MB * 1024 * 1024;
 
